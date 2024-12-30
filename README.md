@@ -37,6 +37,18 @@ go get google.golang.org/protobuf/
 ```
 go get google.golang/grpc/
 ```
+## Installing prometheus for go
+
+Docker installation
+
+```
+docker run --name prometheus -d -p 127.0.0.1:9090:9090 prom/prometheus
+```
+
+Go mod installation
+```
+go get github.com/prometheus/client_golang/prometheus
+```
 
 ```
 docker run -d --name kafka --hostname kafka -p 9092:9092 \

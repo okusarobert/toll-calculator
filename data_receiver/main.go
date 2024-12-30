@@ -3,10 +3,12 @@ package main
 import (
 	"fmt"
 	"log"
+	"math"
 	"net/http"
 
 	"github.com/gorilla/websocket"
 	"github.com/okusarobert/toll-calculator/types"
+	"golang.org/x/exp/rand"
 )
 
 func main() {
@@ -59,10 +61,12 @@ func (dr *DataReceiver) wsReceiveLoop() {
 	fmt.Println("New OBU client connected")
 	for {
 		var data types.OBUData
+		reqID := rand.Intn(math.MaxInt)
 		if err := dr.conn.ReadJSON(&data); err != nil {
 			log.Println("read error: ", err)
 			continue
 		}
+		data.RequestID = string(reqID)
 		dr.producer.ProduceData(data)
 	}
 }
